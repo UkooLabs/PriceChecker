@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PriceChecker.MainPage">
+    <AbsoluteLayout VerticalOptions="Fill">
+
+        <FlexLayout Direction="Column" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <!-- Header -->
+            <Label Text="Price Checker Application" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Black" />
+
+            <!-- Body -->
+            <FlexLayout FlexLayout.Grow="1">
+
+                <ListView  ItemsSource="{Binding CartProducts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="7*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Thumbnail}" Grid.Column="0"></Image>
+                                    <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" Grid.Column="1" VerticalTextAlignment="Start"></Label>
+                                    <Label Text="{Binding Price}" Grid.Column="1" VerticalTextAlignment="End"></Label>
+                                    <Image  Source="trash.png" Grid.Column="3">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoveProduct_Tapped" CommandParameter="{Binding Id}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </FlexLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label FontSize="25" Text="{Binding CartTotal, StringFormat='Total: ${0:0.00}'}" Margin="0,0,20,0"/>
+                <Button Text="Add" Clicked="AddProduct_Clicked" FontSize="Large"></Button>
+            </StackLayout>
+
+        </FlexLayout>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="#80000000" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,-1,-1" />
+
+    </AbsoluteLayout>
+</ContentPage>
